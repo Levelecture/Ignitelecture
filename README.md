@@ -1,21 +1,5 @@
-```txt
-npm install
-npm run dev
-```
+# Ignitelecture
 
-```txt
-npm run deploy
-```
+Selamat datang, datang besok lagi saja.
 
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
-
-```txt
-npm run cf-typegen
-```
-
-Pass the `CloudflareBindings` as generics when instantiating `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
-```
+<image src="https://media1.tenor.com/m/zXCbu7b7qA8AAAAd/bocchi-the-rock-bocchi-the-rock-gif.gif"></image>
