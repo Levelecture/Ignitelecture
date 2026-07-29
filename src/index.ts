@@ -7,8 +7,12 @@ import { Scalar } from '@scalar/hono-api-reference'
 const app = new Hono()
 
 app.use('/api/*', cors({
-	origin: (origin) => origin ?? env.FRONTEND_URL,
+  origin: [env.SITE_URL],
+  allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+	allowHeaders: ["Content-Type", "Authorization"],
+  exposeHeaders: ["Content-Length", "X-Retry-After"],
 	credentials: true,
+	maxAge: 10 * 60,
 }))
 
 app.on(['POST', 'GET'], '/api/auth/*', (c) => {

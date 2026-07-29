@@ -10,10 +10,7 @@ export const auth = betterAuth({
 	secret: env.BETTER_AUTH_SECRET,
 	database: drizzleAdapter(db, { provider: 'pg' }),
 	plugins: [openAPI(), admin(), bearer()],
-	trustedOrigins: [
-		env.FRONTEND_URL,
-		env.BETTER_AUTH_URL,
-	],
+	trustedOrigins: [env.SITE_URL],
   emailAndPassword: { enabled: false },
 	socialProviders: {
 		google: {

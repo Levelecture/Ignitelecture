@@ -9,6 +9,7 @@
   "keywords": ["hono"],
   "scripts": {
     "dev": "wrangler dev",
+    "dev:local": "bun run --env-file=.env --port=3001 --hot src/index.ts",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "db:push": "drizzle-kit push",
