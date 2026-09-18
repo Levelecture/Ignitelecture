@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 import { auth } from './auth'
 import { env } from './lib/env'
 import { Scalar } from '@scalar/hono-api-reference'
+import courses from './routes/courses/courses.controller'
 
 const app = new Hono()
 
@@ -18,6 +19,8 @@ app.use('/api/*', cors({
 app.on(['POST', 'GET'], '/api/auth/*', (c) => {
 	return auth.handler(c.req.raw)
 })
+
+app.route('/api/courses', courses)
 
 app.get('/docs', Scalar({
 	pageTitle: 'IgniteLecture API',
