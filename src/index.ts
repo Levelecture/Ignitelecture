@@ -3,7 +3,7 @@ import { cors } from 'hono/cors'
 import { auth } from './auth'
 import { env } from './lib/env'
 import { Scalar } from '@scalar/hono-api-reference'
-import courses from './routes/courses/courses.controller'
+import courses from './modules/courses/courses.controller'
 
 const app = new Hono()
 
