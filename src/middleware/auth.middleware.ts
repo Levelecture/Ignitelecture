@@ -1,7 +1,7 @@
 import type { Context, Next } from 'hono'
 import { auth } from '../auth'
 
-export type AuthVars = { user: { id: string } }
+export type AuthVars = { user: { id: string; role?: string | null } }
 
 export async function authMiddleware(c: Context<{ Variables: AuthVars }>, next: Next) {
   const session = await auth.api.getSession({ headers: c.req.raw.headers })

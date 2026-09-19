@@ -99,7 +99,6 @@ export const accountRelations = relations(account, ({ one }) => ({
   }),
 }));
 
-// App Tables
 export const courses = pgTable(
   "course",
   {
@@ -172,7 +171,12 @@ export const assignments = pgTable(
   ]
 );
 
-// App Relations
+export const allowedEmail = pgTable("allowed_email", {
+  id: text("id").primaryKey().$defaultFn(() => createId()),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export const courseRelations = relations(courses, ({ one, many }) => ({
   user: one(user, {
     fields: [courses.userId],
