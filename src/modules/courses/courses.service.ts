@@ -42,9 +42,9 @@ export async function updateCourse(userId: string, id: string, data: UpdateCours
 }
 
 export async function deleteCourse(userId: string, id: string) {
-  const [deleted] = await db
+  const deleted = await db
     .delete(courses)
     .where(and(eq(courses.id, id), eq(courses.userId, userId)))
-    .returning()
-  return deleted
+    .returning({ id: courses.id })
+  return deleted.length > 0
 }

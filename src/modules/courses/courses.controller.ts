@@ -38,7 +38,7 @@ app.patch('/:id', sValidator('json', updateCourseSchema), async (c) => {
 app.delete('/:id', async (c) => {
   const deleted = await coursesService.deleteCourse(c.get('user').id, c.req.param('id'))
   if (!deleted) return c.json({ error: 'Not found' }, 404)
-  return c.json(deleted)
+  return c.json({ data: deleted })
 })
 
 export default app
