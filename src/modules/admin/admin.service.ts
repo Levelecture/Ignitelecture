@@ -6,7 +6,7 @@ export async function isEmailAllowed(email: string) {
   const [row] = await db
     .select({ id: allowedEmail.id })
     .from(allowedEmail)
-    .where(eq(allowedEmail.email, email.toLowerCase()))
+    .where(eq(allowedEmail.email, email.trim().toLowerCase()))
   return !!row
 }
 
@@ -18,7 +18,7 @@ export async function addAllowedEmail(email: string) {
   try {
     const [created] = await db
       .insert(allowedEmail)
-      .values({ email: email.toLowerCase() })
+      .values({ email: email.trim().toLowerCase() })
       .returning()
     return created
   } catch (e) {

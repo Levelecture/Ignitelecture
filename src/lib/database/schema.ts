@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, check, integer, numeric, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, check, integer, numeric, uniqueIndex, bigint } from "drizzle-orm/pg-core";
 import { createId } from "@paralleldrive/cuid2";
 
 export const user = pgTable("user", {
@@ -175,6 +175,13 @@ export const allowedEmail = pgTable("allowed_email", {
   id: text("id").primaryKey().$defaultFn(() => createId()),
   email: text("email").notNull().unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const rateLimit = pgTable("rate_limit", {
+  id: text("id").primaryKey().$defaultFn(() => createId()),
+  key: text("key").notNull(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
 
 export const courseRelations = relations(courses, ({ one, many }) => ({
