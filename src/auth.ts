@@ -38,6 +38,15 @@ export const auth = betterAuth({
 	},
 	trustedOrigins: [env.SITE_URL],
   emailAndPassword: { enabled: false },
+	rateLimit: {
+		enabled: true,
+		storage: 'database',
+		window: 60,
+		max: 1000,
+		customRules: {
+			'/get-session': false
+		}
+	},
 	socialProviders: {
 		google: {
 			clientId: env.GOOGLE_CLIENT_ID,
@@ -47,19 +56,6 @@ export const auth = betterAuth({
 	session: {
 		expiresIn: 60 * 60 * 24 * 7,
 		updateAge: 60 * 60 * 24
-	},
-	// enabled wajib eksplisit: NODE_ENV tidak di-set di Workers, jadi Better Auth
-	// menganggapnya "development" dan mematikan rate limit secara default.
-	rateLimit: {
-		enabled: true,
-		storage: 'database',
-		window: 10,
-		max: 100,
-		customRules: {
-			// `/sign-in*` pakai aturan bawaan Better Auth (3 req / 10s per IP).
-			// Dipanggil tiap load halaman — jangan sampai menghajar Neon.
-			'/get-session': false
-		}
 	},
 	user: {
 		additionalFields: {

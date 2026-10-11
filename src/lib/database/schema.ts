@@ -177,13 +177,11 @@ export const allowedEmail = pgTable("allowed_email", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
-// Counter rate limit Better Auth (storage: "database"). Nama model harus `rateLimit`
-// dan field harus key/count/lastRequest agar dikenali adapter.
 export const rateLimit = pgTable("rate_limit", {
   id: text("id").primaryKey().$defaultFn(() => createId()),
-  key: text("key"),
-  count: integer("count"),
-  lastRequest: bigint("last_request", { mode: "number" }),
+  key: text("key").notNull(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
 
 export const courseRelations = relations(courses, ({ one, many }) => ({
