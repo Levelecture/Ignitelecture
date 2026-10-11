@@ -165,18 +165,7 @@ Response Body (Success) :
 
 ```json
 {
-  "id": "clx1234567890",
-  "userId": "usr123456",
-  "code": "CS101",
-  "name": "Pemrograman Dasar",
-  "sks": 3,
-  "lecturerName": "Dr. Aris",
-  "room": "Lab 1",
-  "status": "aktif",
-  "cover": "https://example.com/cover.jpg",
-  "semester": 1,
-  "createdAt": "2026-09-16T16:00:00.000Z",
-  "updatedAt": "2026-09-16T16:00:00.000Z"
+  "data": true
 }
 ```
 
