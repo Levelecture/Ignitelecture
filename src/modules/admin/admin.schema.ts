@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const addAllowedEmailSchema = z.object({
-  email: z.email().transform((v) => v.toLowerCase()),
+  email: z.string().trim().toLowerCase().pipe(z.email()),
 })
 
 export type AddAllowedEmailInput = z.infer<typeof addAllowedEmailSchema>

@@ -38,6 +38,15 @@ export const auth = betterAuth({
 	},
 	trustedOrigins: [env.SITE_URL],
   emailAndPassword: { enabled: false },
+	rateLimit: {
+		enabled: true,
+		storage: 'database',
+		window: 60,
+		max: 1000,
+		customRules: {
+			'/get-session': false
+		}
+	},
 	socialProviders: {
 		google: {
 			clientId: env.GOOGLE_CLIENT_ID,

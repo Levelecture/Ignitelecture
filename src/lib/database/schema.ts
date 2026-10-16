@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, check, integer, numeric, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, check, integer, numeric, uniqueIndex, bigint } from "drizzle-orm/pg-core";
 import { createId } from "@paralleldrive/cuid2";
 
 export const user = pgTable("user", {
@@ -149,7 +149,7 @@ export const assignments = pgTable(
     dueAt: timestamp("due_at", { withTimezone: true }),
     reminderAt: timestamp("reminder_at", { withTimezone: true }),
     submittedAt: timestamp("submitted_at", { withTimezone: true }),
-    grade: numeric("grade", { precision: 5, scale: 2 }),
+    grade: numeric("grade", { precision: 5, scale: 2, mode: "number" }),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .defaultNow()
@@ -168,6 +168,10 @@ export const assignments = pgTable(
       "assignment_priority_check",
       sql`${table.priority} is null or ${table.priority} in ('low', 'medium', 'high', 'urgent')`
     ),
+    check(
+      "assignment_grade_status_check",
+      sql`${table.grade} is null or ${table.status} = 'done'`
+    ),
   ]
 );
 
@@ -175,6 +179,13 @@ export const allowedEmail = pgTable("allowed_email", {
   id: text("id").primaryKey().$defaultFn(() => createId()),
   email: text("email").notNull().unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const rateLimit = pgTable("rate_limit", {
+  id: text("id").primaryKey().$defaultFn(() => createId()),
+  key: text("key").notNull(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
 
 export const courseRelations = relations(courses, ({ one, many }) => ({
