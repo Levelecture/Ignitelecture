@@ -1,0 +1,1 @@
+ALTER TABLE "assignment" ADD CONSTRAINT "assignment_grade_status_check" CHECK ("assignment"."grade" is null or "assignment"."status" = 'done');
