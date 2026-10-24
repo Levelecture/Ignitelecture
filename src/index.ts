@@ -4,6 +4,8 @@ import { auth } from './auth'
 import { env } from './lib/env'
 import { Scalar } from '@scalar/hono-api-reference'
 import courses from './modules/courses/courses.controller'
+import assignments from './modules/assignments/assignments.controller'
+import charts from './modules/charts/charts.controller'
 import admin from './modules/admin/admin.controller'
 
 const app = new Hono()
@@ -22,6 +24,8 @@ app.on(['POST', 'GET'], '/api/auth/*', (c) => {
 })
 
 app.route('/api/courses', courses)
+app.route('/api/assignments', assignments)
+app.route('/api/charts', charts)
 app.route('/api/admin', admin)
 
 app.get('/docs', Scalar({
