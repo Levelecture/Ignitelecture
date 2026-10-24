@@ -1,11 +1,14 @@
 # Course API Spec
 
+## Auth
+
+All endpoints require authentication:
+
+- `Authorization: Bearer <token>` — or session cookie
+
 ## Create Course
 
-Endpoint : POST /api/courses
-
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
+`POST /api/courses`
 
 Request Body :
 
@@ -21,7 +24,7 @@ Request Body :
 }
 ```
 
-Response Body (Success) :
+**201 Created**
 
 ```json
 {
@@ -40,7 +43,7 @@ Response Body (Success) :
 }
 ```
 
-Response Body (Failed - Duplicate Code) :
+**409 Conflict** — duplicate code
 
 ```json
 {
@@ -50,12 +53,9 @@ Response Body (Failed - Duplicate Code) :
 
 ## Get All Courses
 
-Endpoint : GET /api/courses
+`GET /api/courses`
 
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
-
-Response Body (Success) :
+**200 OK**
 
 ```json
 [
@@ -78,12 +78,9 @@ Response Body (Success) :
 
 ## Get Course By ID
 
-Endpoint : GET /api/courses/:id
+`GET /api/courses/:id`
 
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
-
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -102,7 +99,7 @@ Response Body (Success) :
 }
 ```
 
-Response Body (Failed - Not Found) :
+**404 Not Found**
 
 ```json
 {
@@ -112,10 +109,7 @@ Response Body (Failed - Not Found) :
 
 ## Update Course
 
-Endpoint : PATCH /api/courses/:id
-
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
+`PATCH /api/courses/:id`
 
 Request Body :
 
@@ -127,7 +121,7 @@ Request Body :
 }
 ```
 
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -146,7 +140,7 @@ Response Body (Success) :
 }
 ```
 
-Response Body (Failed - Not Found) :
+**404 Not Found**
 
 ```json
 {
@@ -156,12 +150,9 @@ Response Body (Failed - Not Found) :
 
 ## Delete Course
 
-Endpoint : DELETE /api/courses/:id
+`DELETE /api/courses/:id`
 
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
-
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -169,7 +160,7 @@ Response Body (Success) :
 }
 ```
 
-Response Body (Failed - Not Found) :
+**404 Not Found**
 
 ```json
 {

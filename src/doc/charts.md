@@ -1,17 +1,20 @@
 # Chart API Spec
 
-Modul terpisah untuk data chart di frontend. Semua endpoint butuh autentikasi:
+Separate module for frontend chart data.
 
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
+## Auth
+
+All endpoints require authentication:
+
+- `Authorization: Bearer <token>` — or session cookie
 
 ## Get Assignment Status Chart
 
-Endpoint : GET /api/charts/status
+`GET /api/charts/status`
 
-Jumlah assignment per status. Selalu memuat ketiga key.
+Assignment count per status. Always includes all three keys.
 
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -21,11 +24,11 @@ Response Body (Success) :
 
 ## Get Assignment Grades Chart
 
-Endpoint : GET /api/charts/grades
+`GET /api/charts/grades`
 
-Assignment yang sudah punya nilai, urut `createdAt` asc.
+Assignments that already have a grade, sorted by `createdAt` asc.
 
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -35,4 +38,4 @@ Response Body (Success) :
 }
 ```
 
-Catatan: semua data otomatis difilter ke milik user yang login.
+Note: all data is automatically filtered to the logged-in user.

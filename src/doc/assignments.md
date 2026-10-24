@@ -1,18 +1,20 @@
 # Assignment API Spec
 
-Semua endpoint butuh autentikasi:
+## Auth
 
-Request Header :
-- Authorization : `Bearer <token>` — atau Cookie session
+All endpoints require authentication:
 
-Field:
+- `Authorization: Bearer <token>` — or session cookie
+
+## Fields
+
 - `status` : `todo` | `in_progress` | `done` (default `todo`)
-- `priority` : `low` | `medium` | `high` | `urgent` (opsional)
-- `grade` : number (0–100, 2 desimal) — dikembalikan sebagai number, bukan string. **Hanya boleh diisi saat `status` = `done`.** Isi `grade` tanpa `status: "done"` → `400`. Mengubah `status` keluar dari `done` **otomatis mengosongkan `grade`**.
+- `priority` : `low` | `medium` | `high` | `urgent` (optional)
+- `grade` : number (2 decimal places) — returned as a number, not a string. **Only allowed when `status` = `done`.** Sending `grade` without `status: "done"` → `400`. Changing `status` away from `done` **clears `grade` automatically**.
 
 ## Create Assignment
 
-Endpoint : POST /api/assignments
+`POST /api/assignments`
 
 Request Body :
 
@@ -27,7 +29,7 @@ Request Body :
 }
 ```
 
-Response Body (Success - 201) :
+**201 Created**
 
 ```json
 {
@@ -48,7 +50,15 @@ Response Body (Success - 201) :
 }
 ```
 
-Response Body (Failed - Course Not Found) :
+**400 Bad Request** — `grade` sent without `status: "done"`
+
+```json
+{
+  "error": "Grade hanya bisa diisi saat status done"
+}
+```
+
+**404 Not Found** — course does not belong to the user
 
 ```json
 {
@@ -58,25 +68,25 @@ Response Body (Failed - Course Not Found) :
 
 ## Get All Assignments
 
-Endpoint : GET /api/assignments
+`GET /api/assignments`
 
-Query Parameters (semua opsional) :
+Query Parameters (all optional) :
 
-| Param | Nilai | Keterangan |
+| Param | Value | Notes |
 |---|---|---|
-| `search` | string | cari di `title` (case-insensitive) |
-| `status` | `todo` \| `in_progress` \| `done` | filter status |
-| `priority` | `low` \| `medium` \| `high` \| `urgent` | filter priority |
-| `courseId` | string | filter per mata kuliah |
-| `order` | `asc` \| `desc` | urut `createdAt`, default `desc` |
+| `search` | string | searches `title` (case-insensitive) |
+| `status` | `todo` \| `in_progress` \| `done` | filter by status |
+| `priority` | `low` \| `medium` \| `high` \| `urgent` | filter by priority |
+| `courseId` | string | filter by course |
+| `order` | `asc` \| `desc` | sorts by `createdAt`, default `desc` |
 
-Contoh :
+Example :
 
 ```
 GET /api/assignments?search=uts&status=todo&priority=high&order=asc
 ```
 
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -102,15 +112,15 @@ Response Body (Success) :
 }
 ```
 
-Catatan: list dibungkus `{ "data": [...] }`. Tiap baris tidak menyertakan `userId`, tapi ada `courseName` + `courseCode` (dari join). Respons tunggal (`GET /:id`, `POST`, `PATCH`) tetap objek penuh termasuk `userId`.
+Note: the list is wrapped in `{ "data": [...] }`. Each row omits `userId` but includes `courseName` + `courseCode` (from the join). Single responses (`GET /:id`, `POST`, `PATCH`) still return the full object including `userId`.
 
 ## Get Assignment By ID
 
-Endpoint : GET /api/assignments/:id
+`GET /api/assignments/:id`
 
-Response Body (Success) : satu assignment.
+**200 OK** — a single assignment.
 
-Response Body (Failed - Not Found) :
+**404 Not Found**
 
 ```json
 {
@@ -120,9 +130,9 @@ Response Body (Failed - Not Found) :
 
 ## Update Assignment
 
-Endpoint : PATCH /api/assignments/:id
+`PATCH /api/assignments/:id`
 
-Partial. Kirim hanya field yang berubah. Field nullable (`notes`, `taskUrl`, `priority`, `dueAt`, `reminderAt`, `submittedAt`, `grade`) bisa di-set `null` untuk mengosongkan.
+Partial. Send only the fields that changed. Nullable fields (`notes`, `taskUrl`, `priority`, `dueAt`, `reminderAt`, `submittedAt`, `grade`) can be set to `null` to clear them.
 
 Request Body :
 
@@ -134,9 +144,17 @@ Request Body :
 }
 ```
 
-Response Body (Success) : assignment lengkap setelah update.
+**200 OK** — the full assignment after the update.
 
-Response Body (Failed - Course Not Found / Not Found) :
+**400 Bad Request** — `grade` sent while the resulting status is not `done`
+
+```json
+{
+  "error": "Grade hanya bisa diisi saat status done"
+}
+```
+
+**404 Not Found** — assignment or course not found
 
 ```json
 {
@@ -146,9 +164,9 @@ Response Body (Failed - Course Not Found / Not Found) :
 
 ## Delete Assignment
 
-Endpoint : DELETE /api/assignments/:id
+`DELETE /api/assignments/:id`
 
-Response Body (Success) :
+**200 OK**
 
 ```json
 {
@@ -156,7 +174,7 @@ Response Body (Success) :
 }
 ```
 
-Response Body (Failed - Not Found) :
+**404 Not Found**
 
 ```json
 {
