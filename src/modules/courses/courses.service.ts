@@ -5,7 +5,19 @@ import type { CreateCourseInput, UpdateCourseInput } from './courses.schema'
 
 export function listCourses(userId: string) {
   return db
-    .select()
+    .select({
+      id: courses.id,
+      code: courses.code,
+      name: courses.name,
+      sks: courses.sks,
+      lecturerName: courses.lecturerName,
+      room: courses.room,
+      status: courses.status,
+      cover: courses.cover,
+      semester: courses.semester,
+      createdAt: courses.createdAt,
+      updatedAt: courses.updatedAt,
+    })
     .from(courses)
     .where(eq(courses.userId, userId))
     .orderBy(desc(courses.createdAt))

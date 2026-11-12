@@ -10,7 +10,7 @@ app.use('*', authMiddleware)
 
 app.get('/', async (c) => {
   const rows = await coursesService.listCourses(c.get('user').id)
-  return c.json(rows)
+  return c.json({ data: rows })
 })
 
 app.get('/:id', async (c) => {

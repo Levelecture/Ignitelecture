@@ -10,7 +10,7 @@ All endpoints require authentication:
 
 - `status` : `todo` | `in_progress` | `done` (default `todo`)
 - `priority` : `low` | `medium` | `high` | `urgent` (optional)
-- `grade` : number (2 decimal places) — returned as a number, not a string. **Only allowed when `status` = `done`.** Sending `grade` without `status: "done"` → `400`. Changing `status` away from `done` **clears `grade` automatically**.
+- `grade` : number (0–100, 2 decimal places) — returned as a number, not a string. **Only allowed when `status` = `done`.** Sending `grade` without `status: "done"` → `400`. Changing `status` away from `done` **clears `grade` automatically**.
 
 ## Create Assignment
 

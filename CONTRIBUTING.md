@@ -2,10 +2,11 @@
 
 ## Setup
 
-1. `bun install`
-2. Copy `.env.example` to `.env`, then open and fill it in
-3. Apply migrations to your database: `bun run db:migrate`
-4. Start `bun run dev:local`
+1. Fork and clone
+2. `bun install`
+3. Copy `.env.example` to `.env`, then open and fill it in
+4. Apply migrations to your database: `bun run db:migrate`
+5. Start `bun run dev:local`
 
 ## Commands
 
