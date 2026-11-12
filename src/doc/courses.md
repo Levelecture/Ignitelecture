@@ -55,26 +55,29 @@ Request Body :
 
 `GET /api/courses`
 
-**200 OK**
+**200 OK** — sorted by `createdAt` desc.
 
 ```json
-[
-  {
-    "id": "clx1234567890",
-    "userId": "usr123456",
-    "code": "CS101",
-    "name": "Pemrograman Dasar",
-    "sks": 3,
-    "lecturerName": "Dr. Aris",
-    "room": "Lab 1",
-    "status": "aktif",
-    "cover": "https://example.com/cover.jpg",
-    "semester": 1,
-    "createdAt": "2026-09-16T16:00:00.000Z",
-    "updatedAt": "2026-09-16T16:00:00.000Z"
-  }
-]
+{
+  "data": [
+    {
+      "id": "clx1234567890",
+      "code": "CS101",
+      "name": "Pemrograman Dasar",
+      "sks": 3,
+      "lecturerName": "Dr. Aris",
+      "room": "Lab 1",
+      "status": "aktif",
+      "cover": "https://example.com/cover.jpg",
+      "semester": 1,
+      "createdAt": "2026-09-16T16:00:00.000Z",
+      "updatedAt": "2026-09-16T16:00:00.000Z"
+    }
+  ]
+}
 ```
+
+Note: the list is wrapped in `{ "data": [...] }`. Each row omits `userId`. Single responses (`GET /:id`, `POST`, `PATCH`) still return the full object including `userId`.
 
 ## Get Course By ID
 
